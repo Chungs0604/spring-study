@@ -9,7 +9,11 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemmoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+
+@Configuration
 public class AppConfig {
 
 
@@ -21,19 +25,20 @@ public class AppConfig {
 //        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
 //    }
 
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(MemberRepository());
     }
-
-    private MemberRepository MemberRepository() {
+    @Bean
+    public MemberRepository MemberRepository() {
         return new MemmoryMemberRepository();
     }
-
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(DiscountPolicy(), MemberRepository());
     }
-
-    private DiscountPolicy DiscountPolicy() {
+    @Bean
+    public DiscountPolicy DiscountPolicy() {
         return new RateDiscountPolicy();
     }
 }
